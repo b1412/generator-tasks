@@ -1,6 +1,4 @@
-package com.github.b1412.template.tasks.kotlin.permissions.bean
-
-import com.github.b1412.template.tasks.kotlin.permissions.bean.TaskPermission
+package com.github.b1412.generator.tasks.kotlin.permissions.bean
 
 data class TaskRolePermission(
 

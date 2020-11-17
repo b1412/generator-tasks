@@ -1,10 +1,10 @@
-package com.github.b1412.template.tasks.kotlin
+package com.github.b1412.generator.tasks.kotlin
 
 
 import com.github.b1412.generator.entity.CodeEntity
 import com.github.b1412.generator.entity.CodeProject
 import com.github.b1412.generator.task.Task
-import com.github.b1412.template.tasks.kotlin.permissions.*
+import com.github.b1412.generator.tasks.kotlin.permissions.*
 import java.sql.ResultSet
 import java.sql.Statement
 

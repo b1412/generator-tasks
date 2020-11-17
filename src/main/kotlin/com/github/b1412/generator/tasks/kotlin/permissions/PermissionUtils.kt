@@ -1,11 +1,11 @@
-package com.github.b1412.template.tasks.kotlin.permissions
+package com.github.b1412.generator.tasks.kotlin.permissions
 
 
 import arrow.core.extensions.list.foldable.firstOption
 import arrow.core.getOrElse
 import arrow.core.toOption
 import com.github.b1412.generator.entity.CodePermission
-import com.github.b1412.template.tasks.kotlin.permissions.bean.*
+import com.github.b1412.generator.tasks.kotlin.permissions.bean.*
 import com.google.common.base.CaseFormat
 
 import java.sql.Connection

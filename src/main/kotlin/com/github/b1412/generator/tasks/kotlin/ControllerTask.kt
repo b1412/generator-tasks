@@ -1,10 +1,10 @@
-package com.github.b1412.template.tasks.kotlin
+package com.github.b1412.generator.tasks.kotlin
 
 import com.github.b1412.generator.entity.CodeEntity
 import com.github.b1412.generator.ext.Utils
 import com.github.b1412.generator.task.MultipleTask
 import com.github.b1412.generator.task.Task
-import com.github.b1412.template.TaskConstants
+import com.github.b1412.generator.TaskConstants
 
 
 val entityNames: (Task, CodeEntity) -> Map<String, Any> = { _, entity ->

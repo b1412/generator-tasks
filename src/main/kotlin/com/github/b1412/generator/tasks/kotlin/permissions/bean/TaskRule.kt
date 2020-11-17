@@ -1,4 +1,4 @@
-package com.github.b1412.template.tasks.kotlin.permissions.bean
+package com.github.b1412.generator.tasks.kotlin.permissions.bean
 
 
 data class TaskRule(

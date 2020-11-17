@@ -1,7 +1,7 @@
-package com.github.b1412.template.tasks.kotlin
+package com.github.b1412.generator.tasks.kotlin
 
 import com.github.b1412.generator.task.MultipleTask
-import com.github.b1412.template.TaskConstants
+import com.github.b1412.generator.TaskConstants
 
 
 class ServiceTask : MultipleTask(

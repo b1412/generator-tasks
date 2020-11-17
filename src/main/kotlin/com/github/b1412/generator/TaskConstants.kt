@@ -1,4 +1,4 @@
-package com.github.b1412.template
+package com.github.b1412.generator
 
 import java.util.Properties
 
