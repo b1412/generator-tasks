@@ -16,6 +16,11 @@ fun ktGenerator(config: String) {
     val packageName = appProps.getProperty("packageName")
     val entityPackageName = appProps.getProperty("entityLocationPattern")
     val projectId = appProps.getProperty("projectId").toInt()
+
+    val properties: MutableMap<String, String> = mutableMapOf()
+    for (name in appProps.stringPropertyNames()) {
+        properties[name] = appProps.getProperty(name)
+    }
     val entities = scanForCodeEntities(entityPackageName, BaseEntity::class.java, projectId)
     TaskConstants.init(config)
     val tasks = listOf(
@@ -23,9 +28,9 @@ fun ktGenerator(config: String) {
             ControllerTask(),
             DaoTask(),
             ServiceTask(),
-            AllPermissionTask(),
-            PermissionTask(),
-            RolePermissionRuleTask(),
+            AllPermissionTask(properties),
+            PermissionTask(properties),
+            RolePermissionRuleTask(properties),
             ExcelExportTask()
     )
     tasks.forEach {

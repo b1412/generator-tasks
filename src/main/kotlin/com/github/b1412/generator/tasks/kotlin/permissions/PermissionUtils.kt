@@ -7,30 +7,20 @@ import arrow.core.toOption
 import com.github.b1412.generator.entity.CodePermission
 import com.github.b1412.generator.tasks.kotlin.permissions.bean.*
 import com.google.common.base.CaseFormat
-
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
 import java.sql.Statement
-import java.util.*
-
 
 var conn: Connection? = null
 
-
-fun getConnection() {
-    val connectionProps = Properties()
-    connectionProps.load(Thread.currentThread().contextClassLoader.getResourceAsStream("generator/local.properties"))
-    val jdbcUser = connectionProps.getProperty("jdbcUser")
-    val jdbcPassword = connectionProps.getProperty("jdbcPassword")
-    val jdbcDriver = connectionProps.getProperty("jdbcDriver")
-    val jdbcUrl = connectionProps.getProperty("jdbcUrl")
-
-    connectionProps["user"] = jdbcUser
-    connectionProps["password"] = jdbcPassword
-
+fun getConnection(map: MutableMap<String, String>) {
+    val jdbcUser = map["jdbcUser"]
+    val jdbcPassword = map["jdbcPassword"]
+    val jdbcDriver = map["jdbcDriver"]
+    val jdbcUrl = map["jdbcUrl"]
     Class.forName(jdbcDriver).newInstance()
-    conn = DriverManager.getConnection(jdbcUrl, connectionProps)
+    conn = DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword)
 }
 
 fun getResultSet(beanName: String, statement: Statement?, resultset: ResultSet?): ResultSet {
@@ -94,7 +84,6 @@ fun getRules(resultset: ResultSet): List<TaskRule> {
 }
 
 fun getPermissions(entityName: String, baseId: Long): List<TaskPermission> {
-
     val permissionList = mutableListOf<TaskPermission>()
     permissionList.add(indexPermission(entityName))
     permissionList.add(createPermission(entityName))
@@ -266,7 +255,7 @@ fun getRolePermissionRule(taskRolePermissionList: List<TaskRolePermission>, task
                     println("Default Permission Setting [${rolePermission.permission.entity}]")
 
                     val ruleId = when (rolePermission.roleId) {
-                        1L -> taskRuleList.first { it.id== 1L } //super admin
+                        1L -> taskRuleList.first { it.id == 1L } //super admin
                         2L -> taskRuleList.first { it.id == 5L }   //app admin
                         10L -> taskRuleList.first { it.id == 5L }   // customer
                         //100L -> taskRuleList.first { it.id == 4L }  //anno
@@ -278,11 +267,11 @@ fun getRolePermissionRule(taskRolePermissionList: List<TaskRolePermission>, task
                     ruleId
                 }.toOption()
         val rule = toOption.map {
-                    val rolePermissionRule = TaskRolePermissionRule()
-                    rolePermissionRule.rolePermissionId = rolePermission.id
-                    rolePermissionRule.ruleId = it.id
-                    rolePermissionRuleList.add(rolePermissionRule)
-                }
+            val rolePermissionRule = TaskRolePermissionRule()
+            rolePermissionRule.rolePermissionId = rolePermission.id
+            rolePermissionRule.ruleId = it.id
+            rolePermissionRuleList.add(rolePermissionRule)
+        }
         rule
     }
 

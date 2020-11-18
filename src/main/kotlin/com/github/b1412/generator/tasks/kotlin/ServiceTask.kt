@@ -1,12 +1,12 @@
 package com.github.b1412.generator.tasks.kotlin
 
-import com.github.b1412.generator.task.MultipleTask
 import com.github.b1412.generator.TaskConstants
+import com.github.b1412.generator.task.MultipleTask
 
 
 class ServiceTask : MultipleTask(
-    replaceFile = false,
-    folder = { project, _ -> TaskConstants.apiPath + TaskConstants.srcPath + project.packageName.replace(".", "/") + "/" + "service" },
-    filename = { _, entity -> entity!!.name + "Service.kt" },
-    templatePath = "kotlin/service.ftl"
+        replaceFile = false,
+        folder = { project, _ -> TaskConstants.apiPath + TaskConstants.srcPath + project.packageName.replace(".", "/") + "/" + "service" },
+        filename = { _, entity -> entity!!.name + "Service.kt" },
+        templatePath = "kotlin/service.ftl"
 )
