@@ -15,7 +15,7 @@ fun ktGenerator(config: String) {
     val projectName = appProps.getProperty("projectName")
     val packageName = appProps.getProperty("packageName")
     val entityPackageName = appProps.getProperty("entityLocationPattern")
-    val projectId = appProps.getProperty("entityLocationPattern").toInt()
+    val projectId = appProps.getProperty("projectId").toInt()
     val entities = scanForCodeEntities(entityPackageName, BaseEntity::class.java, projectId)
     TaskConstants.init(config)
     val tasks = listOf(
