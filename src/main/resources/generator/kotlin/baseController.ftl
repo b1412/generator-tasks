@@ -38,8 +38,7 @@ abstract class Base${entity.name}Controller : BaseController<${entity.name}, Lon
 
     @PutMapping("{id}")
     override fun updateOne(@PathVariable id: Long, @Validated @RequestBody input: ${entity.name}, request: HttpServletRequest): ResponseEntity<*> {
-        super.updateOne(id, input, request)
-        return ResponseEntity.ok().build<Void>()
+        return super.updateOne(id, input, request)
     }
 
     @DeleteMapping("{id}")
