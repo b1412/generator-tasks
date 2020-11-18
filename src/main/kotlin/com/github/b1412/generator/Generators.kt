@@ -9,7 +9,7 @@ import com.github.b1412.generator.template.FreeMarkerHelper
 import java.util.*
 
 
-fun run(config: String) {
+fun ktGenerator(config: String) {
     val appProps = Properties()
     appProps.load(Thread.currentThread().contextClassLoader.getResourceAsStream(config))
     val projectName = appProps.getProperty("projectName")
