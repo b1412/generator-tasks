@@ -4,7 +4,7 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 plugins {
     val kotlinVersion = "1.4.10"
     jacoco
-    id("org.springframework.boot") version "2.3.0.RELEASE"
+    id("org.springframework.boot") version "2.4.0"
     id("io.spring.dependency-management") version "1.0.10.RELEASE"
     kotlin("jvm") version kotlinVersion
     `maven`
@@ -26,14 +26,17 @@ repositories {
 }
 
 dependencies {
+    val arrowVersion = "0.11.0"
+
     implementation("com.github.b1412:api-common:2cbab0a995")
-    implementation("com.github.b1412:kotlin-code-generator:f606c3539e")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("com.github.b1412:kotlin-code-generator:790498a17d")
+
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    val arrowVersion = "0.11.0"
+
     implementation("io.arrow-kt:arrow-core:$arrowVersion")
     implementation("io.arrow-kt:arrow-syntax:$arrowVersion")
+
     implementation("com.google.guava:guava:30.0-jre")
     implementation("mysql:mysql-connector-java:6.0.5")
 }
