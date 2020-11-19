@@ -13,6 +13,10 @@ fun projectPermissionProcessor(map: MutableMap<String, String>): (Task, CodeProj
         val allRolePermissionSqlList = mutableListOf<String>()
         val allRolePermissionRuleSqlList = mutableListOf<String>()
 
+        val delAllPermissionSqlList = mutableListOf<String>()
+        val delAllRolePermissionSqlList = mutableListOf<String>()
+        val delAllRolePermissionRuleSqlList = mutableListOf<String>()
+
         project.entities.forEach {
             if (task.ignoreEntities.any { name -> name == it.name }) {
                 return@forEach
@@ -25,18 +29,31 @@ fun projectPermissionProcessor(map: MutableMap<String, String>): (Task, CodeProj
             val permissionList = getPermissions(it.name, it.code.toLong())
             val rolePermissionList = getRolePermissions(roleList, permissionList)
             val rolePermissionRuleList = getRolePermissionRule(rolePermissionList, ruleList, it.permissions)
+
             val permissionSqlList = getPermissionSql(permissionList)
             val rolePermissionSqlList = getRolePermissionSql(rolePermissionList)
             val rolePermissionRuleSqlList = getRolePermissionRuleSql(rolePermissionRuleList)
 
+            val delPermissionSqlList = delPermissionSql(permissionList)
+            val delRolePermissionSqlList = delRolePermissionSql(rolePermissionList)
+            val delRolePermissionRuleSqlList = delRolePermissionRuleSql(rolePermissionRuleList)
+
             allPermissionSqlList.addAll(permissionSqlList)
             allRolePermissionSqlList.addAll(rolePermissionSqlList)
             allRolePermissionRuleSqlList.addAll(rolePermissionRuleSqlList)
+
+            delAllPermissionSqlList.addAll(delPermissionSqlList)
+            delAllRolePermissionSqlList.addAll(delRolePermissionSqlList)
+            delAllRolePermissionRuleSqlList.addAll(delRolePermissionRuleSqlList)
         }
         mutableMapOf(
                 "allPermissionSqlList" to allPermissionSqlList,
                 "allRolePermissionSqlList" to allRolePermissionSqlList,
-                "allRolePermissionRuleSqlList" to allRolePermissionRuleSqlList
+                "allRolePermissionRuleSqlList" to allRolePermissionRuleSqlList,
+
+                "delAllPermissionSqlList" to delAllPermissionSqlList,
+                "delAllRolePermissionSqlList" to delAllRolePermissionSqlList,
+                "delAllRolePermissionRuleSqlList" to delAllRolePermissionRuleSqlList
         )
 
     }

@@ -279,40 +279,56 @@ fun getRolePermissionRule(taskRolePermissionList: List<TaskRolePermission>, task
 }
 
 fun getPermissionSql(permissionList: List<TaskPermission>): List<String> {
-    val sqlList = mutableListOf<String>()
-    permissionList.map { permission ->
-        val sql = """
+    return permissionList.map { permission ->
+        """
                 INSERT INTO permission (id, version, auth_key, auth_uris, entity, http_method, creator_id, modifier_id)
                 VALUES (${permission.id},${permission.version},'${permission.authKey}','${permission.authUris}','${permission.entity}','${permission.httpMethod}',${permission.creatorId}, ${permission.modifierId});
-                """.trimIndent()
-
-        sqlList.add(sql)
+                """
     }
-    return sqlList
+}
+
+
+fun delPermissionSql(permissionList: List<TaskPermission>): List<String> {
+    return permissionList.map { permission ->
+        """
+            DELETE FROM permission  where id = ${permission.id};
+            """
+    }
 }
 
 fun getRolePermissionSql(taskRolePermissionList: List<TaskRolePermission>): List<String> {
-    val sqlList = mutableListOf<String>()
-    taskRolePermissionList.map { rolePermission ->
-        val sql = """
+    return taskRolePermissionList.map { rolePermission ->
+        """
                 INSERT INTO role_permission (id, version, creator_id, modifier_id, permission_id, role_id)
                 VALUES (${rolePermission.id}, ${rolePermission.version}, ${rolePermission.creatorId}, ${rolePermission.modifierId}, ${rolePermission.permissionId}, ${rolePermission.roleId});
                 """.trimIndent()
 
-        sqlList.add(sql)
     }
-    return sqlList
+}
+
+fun delRolePermissionSql(taskRolePermissionList: List<TaskRolePermission>): List<String> {
+    return taskRolePermissionList.map { rolePermission ->
+        """
+                DELETE FROM role_permission where id = ${rolePermission.id};
+                """
+
+    }
 }
 
 fun getRolePermissionRuleSql(rolePermissionRuleList: List<TaskRolePermissionRule>): List<String> {
-    val sqlList = mutableListOf<String>()
-    rolePermissionRuleList.map { rolePermissionRule ->
-        val sql = """
+    return rolePermissionRuleList.map { rolePermissionRule ->
+        """
                 INSERT INTO role_permission_rule (role_permission_id, rule_id)
                 VALUES (${rolePermissionRule.rolePermissionId}, ${rolePermissionRule.ruleId});
-                """.trimIndent()
-
-        sqlList.add(sql)
+                """
     }
-    return sqlList
+}
+
+fun delRolePermissionRuleSql(rolePermissionRuleList: List<TaskRolePermissionRule>): List<String> {
+    return rolePermissionRuleList.map { rolePermissionRule ->
+        """
+                DELETE FROM role_permission_rule where role_permission_id = ${rolePermissionRule.rolePermissionId} AND  
+                 rule_id = ${rolePermissionRule.ruleId});
+        """
+    }
 }
