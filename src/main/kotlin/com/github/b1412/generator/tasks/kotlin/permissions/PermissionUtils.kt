@@ -309,7 +309,7 @@ fun getRolePermissionSql(taskRolePermissionList: List<TaskRolePermission>): List
 fun delRolePermissionSql(taskRolePermissionList: List<TaskRolePermission>): List<String> {
     return taskRolePermissionList.map { rolePermission ->
         """
-                DELETE FROM role_permission where id = ${rolePermission.id};
+DELETE FROM role_permission where id = ${rolePermission.id};
                 """
 
     }
@@ -327,8 +327,7 @@ fun getRolePermissionRuleSql(rolePermissionRuleList: List<TaskRolePermissionRule
 fun delRolePermissionRuleSql(rolePermissionRuleList: List<TaskRolePermissionRule>): List<String> {
     return rolePermissionRuleList.map { rolePermissionRule ->
         """
-                DELETE FROM role_permission_rule where role_permission_id = ${rolePermissionRule.rolePermissionId} AND  
-                 rule_id = ${rolePermissionRule.ruleId});
+DELETE FROM role_permission_rule where role_permission_id = ${rolePermissionRule.rolePermissionId} AND rule_id = ${rolePermissionRule.ruleId};
         """
     }
 }
