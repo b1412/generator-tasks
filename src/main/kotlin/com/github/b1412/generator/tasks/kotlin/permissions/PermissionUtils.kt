@@ -311,7 +311,6 @@ fun delRolePermissionSql(taskRolePermissionList: List<TaskRolePermission>): List
         """
 DELETE FROM role_permission where id = ${rolePermission.id};
                 """
-
     }
 }
 
