@@ -3,13 +3,14 @@ package com.github.b1412.generator
 import com.github.b1412.api.entity.BaseEntity
 import com.github.b1412.generator.entity.CodeProject
 import com.github.b1412.generator.entity.scanForCodeEntities
+import com.github.b1412.generator.task.Task
 import com.github.b1412.generator.tasks.kotlin.*
 import com.github.b1412.generator.template.FreeMarkerHelper
 
 import java.util.*
 
 
-fun ktGenerator(config: String) {
+fun ktGenerator(config: String, additionalTasks: List<Task> = listOf()) {
     val appProps = Properties()
     appProps.load(Thread.currentThread().contextClassLoader.getResourceAsStream(config))
     val projectName = appProps.getProperty("projectName")
@@ -29,10 +30,11 @@ fun ktGenerator(config: String) {
             DaoTask(),
             ServiceTask(),
             AllPermissionTask(properties),
+            DelAllPermissionTask(properties),
             PermissionTask(properties),
             RolePermissionRuleTask(properties),
             ExcelExportTask()
-    )
+    ) + additionalTasks
     tasks.forEach {
         it.targetPath = System.getProperty("user.dir")
     }
@@ -43,4 +45,8 @@ fun ktGenerator(config: String) {
             tasks = tasks,
             templateEngine = FreeMarkerHelper()
     ).generate()
+}
+
+fun main() {
+    ktGenerator("")
 }
