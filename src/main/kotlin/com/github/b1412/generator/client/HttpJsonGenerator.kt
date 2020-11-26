@@ -15,6 +15,6 @@ fun createEnv(map: Map<String, Any>): (Task, CodeProject) -> Map<String, Any> {
 class HttpJsonGenerator(map: Map<String, Any>) : SingleTask(
         folder = { _, _ -> """${TaskConstants.generatedPath}/http/""" },
         filename = { _, _ -> "http-client.env.json" },
-        templatePath = "generator/http/envJson.ftl",
+        templatePath = "http/envJson.ftl",
         projectExtProcessors = listOf(createEnv(map))
 )
