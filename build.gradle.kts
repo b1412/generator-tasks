@@ -21,26 +21,22 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
-    maven { url = uri("https://repo.spring.io/milestone") }
     maven(url = "https://jitpack.io")
 }
 
 dependencies {
+    api("com.github.b1412:api-common:2cbab0a995")
+    api("com.github.b1412:kotlin-code-generator:f6f060d6fb")
     val arrowVersion = "0.11.0"
-
-    implementation("com.github.b1412:api-common:2cbab0a995")
-    implementation("com.github.b1412:kotlin-code-generator:790498a17d")
-
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-
-    implementation("io.arrow-kt:arrow-core:$arrowVersion")
-    implementation("io.arrow-kt:arrow-syntax:$arrowVersion")
-
-    implementation("com.google.guava:guava:30.0-jre")
-    implementation("mysql:mysql-connector-java:6.0.5")
+    arrow(arrowVersion)
+    api("com.google.guava:guava:29.0-jre")
 }
 
+fun DependencyHandlerScope.arrow(arrowVersion: String) {
+    api("io.arrow-kt:arrow-fx:$arrowVersion")
+    api("io.arrow-kt:arrow-optics:$arrowVersion")
+    api("io.arrow-kt:arrow-syntax:$arrowVersion")
+}
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict","-Xallow-result-return-type")
