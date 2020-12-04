@@ -4,17 +4,21 @@ import com.github.b1412.generator.TaskConstants
 import com.github.b1412.generator.entity.CodeProject
 import com.github.b1412.generator.task.SingleTask
 import com.github.b1412.generator.task.Task
+import java.nio.file.Path
+import kotlin.io.path.ExperimentalPathApi
+import kotlin.io.path.div
 
 
-fun createEnv(map: Map<String, Any>): (Task, CodeProject) -> Map<String, Any> {
+fun createMap(map: Map<String, Any>): (Task, CodeProject) -> Map<String, Any> {
     return { _, _ ->
         map
     }
 }
 
+
+@ExperimentalPathApi
 class HttpJsonGenerator(map: Map<String, Any>) : SingleTask(
-        folder = { _, _ -> """${TaskConstants.generatedPath}/http/""" },
-        filename = { _, _ -> "http-client.env.json" },
-        templatePath = "http/envJson.ftl",
-        projectExtProcessors = listOf(createEnv(map))
+    filePath = { _, _ -> (Path.of(TaskConstants.generatedPath) / "http/http-client.env.json").toFile().absolutePath },
+    templatePath = "http/envJson.ftl",
+    projectExtProcessors = listOf(createMap(map))
 )

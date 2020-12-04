@@ -6,7 +6,11 @@ import com.github.b1412.generator.task.MultipleTask
 
 
 class RolePermissionRuleTask(map: MutableMap<String, String>) : MultipleTask(
-        folder = { _, entity -> """${TaskConstants.generatedPath}/db/${Utils.lowerHyphen(entity!!.name)}/""" },
-        filename = { _, entity -> Utils.lowerHyphen(entity!!.name) + "-role-permission-rule.sql" },
-        templatePath = "kotlin/rolePermissionRule.ftl",
-        entityExtProcessors = listOf(entityPermissionProcessor(map)))
+    filePath = { _, entity ->
+        """${TaskConstants.generatedPath}/db/${Utils.lowerHyphen(entity!!.name)}/""" + Utils.lowerHyphen(
+            entity.name
+        ) + "-role-permission-rule.sql"
+    },
+    templatePath = "kotlin/rolePermissionRule.ftl",
+    entityExtProcessors = listOf(entityPermissionProcessor(map))
+)

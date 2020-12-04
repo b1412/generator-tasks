@@ -9,16 +9,20 @@ import com.github.b1412.generator.task.Task
 
 val entityNames: (Task, CodeEntity) -> Map<String, Any> = { _, entity ->
     val map = mutableMapOf(
-            "lowerHyphenName" to Utils.lowerHyphen(entity.name)
+        "lowerHyphenName" to Utils.lowerHyphen(entity.name)
     )
     map
 }
 
 
 class ControllerTask : MultipleTask(
-        replaceFile = false,
-        folder = { project, _ -> TaskConstants.apiPath + TaskConstants.srcPath + project.packageName.replace(".", "/") + "/" + "controller" },
-        filename = { _, entity -> entity!!.name + "Controller.kt" },
-        templatePath = "kotlin/controller.ftl",
-        entityExtProcessors = listOf(entityNames)
+    replaceFile = false,
+    filePath = { project, entity ->
+        TaskConstants.apiPath + TaskConstants.srcPath + project.packageName.replace(
+            ".",
+            "/"
+        ) + "/" + "controller/" + entity!!.name + "Controller.kt"
+    },
+    templatePath = "kotlin/controller.ftl",
+    entityExtProcessors = listOf(entityNames)
 )
