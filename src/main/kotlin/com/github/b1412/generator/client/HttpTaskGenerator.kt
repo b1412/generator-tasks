@@ -7,7 +7,7 @@ import com.github.b1412.generator.tasks.kotlin.entityNames
 
 class HttpTaskGenerator : MultipleTask(
     filePath = { _, entity ->
-        """${TaskConstants.generatedPath}/http/${Utils.lowerHyphen(entity!!.name)}.http """
+        """${TaskConstants.generatedPath}/http/${Utils.lowerHyphen(entity!!.name)}.http"""
     },
     templatePath = "http/http.ftl",
     entityExtProcessors = listOf(entityNames)
