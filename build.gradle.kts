@@ -21,8 +21,8 @@ repositories {
     maven {
         url = uri("https://maven.pkg.github.com/b1412/permission-api")
         credentials {
-            username = System.getenv("GITHUB_ACTOR")
-            password = System.getenv("GITHUB_TOKEN")
+            username = "b1412"
+            password = "c753386add5623b358000567e643b1e64662a0e7"
         }
     }
 }
