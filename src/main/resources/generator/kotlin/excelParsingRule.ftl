@@ -20,21 +20,21 @@ class ${entity.name}ExcelParsingRule(
     get() {
         val fileParser = FileParser()
         fileParser.start = 1
-<#list entity.fields as f>
+<#list entity.fields?filter(it->it.importable) as f>
     <#if f.type.name == "Entity">
-        fileParser.addCell(${f?index + 1}, "category", EntityConvertor().apply {
+        fileParser.addCell(${f.excelIndex}, "${f.name?uncap_first}", EntityConvertor().apply {
                 name = "${f.name?capitalize}"
                 fieldName = "name"
                 em = entityManager
         })
     <#elseif f.type.name == "Int" >
-    fileParser.addCell(${f?index + 1}, "${f.name}", IntConvertor())
+        fileParser.addCell(${f.excelIndex}, "${f.name}", IntConvertor())
     <#elseif f.type.name == "Long" >
-    fileParser.addCell(${f?index + 1}, "${f.name}", LongConvertor())
+        fileParser.addCell(${f.excelIndex}, "${f.name}", LongConvertor())
     <#elseif f.type.name == "Double">
-    fileParser.addCell(${f?index + 1}, "${f.name}", DoubleConvertor())
+        fileParser.addCell(${f.excelIndex}, "${f.name}", DoubleConvertor())
     <#else>
-    fileParser.addCell(${f?index + 1}, "${f.name}")
+        fileParser.addCell(${f.excelIndex}, "${f.name}")
     </#if>
 </#list>
         return fileParser
