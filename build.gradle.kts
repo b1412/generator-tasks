@@ -22,7 +22,7 @@ repositories {
 
 dependencies {
     api("com.github.b1412:api-common:2cbab0a995")
-    api("com.github.b1412:kotlin-code-generator:b40ac8ec87")
+    api("com.github.b1412:kotlin-code-generator:77e431bb75")
 
     api("com.google.guava:guava:29.0-jre")
     val arrowVersion = "0.11.0"
