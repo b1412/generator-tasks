@@ -20,10 +20,6 @@ repositories {
     maven(url = "https://jitpack.io")
     maven {
         url = uri("https://maven.pkg.github.com/b1412/permission-api")
-        credentials {
-            username = "b1412"
-            password = "c753386add5623b358000567e643b1e64662a0e7"
-        }
     }
 }
 
