@@ -9,10 +9,10 @@ import javax.persistence.ManyToOne
 @EntityFeature
 @Entity
 data class Tag(
-    @ExcelFeature(importable = true)
+    @ExcelFeature(importable = true, index = 1)
     val name: String,
 
-    @ExcelFeature(importable = true)
+    @ExcelFeature(importable = true, index = 2)
     @ManyToOne
     val tagType: TagType
 ) : BaseEntity()

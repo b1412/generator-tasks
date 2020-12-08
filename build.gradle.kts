@@ -18,9 +18,17 @@ jar.enabled = true
 repositories {
     mavenCentral()
     maven(url = "https://jitpack.io")
+    maven {
+        url = uri("https://maven.pkg.github.com/b1412/permission-api")
+        credentials {
+            username = System.getenv("GITHUB_ACTOR")
+            password = System.getenv("GITHUB_TOKEN")
+        }
+    }
 }
 
 dependencies {
+    implementation("com.github.b1412:permission-base:0.1.36")
     api("com.github.b1412:api-common:e307fc7309")
     api("com.github.b1412:kotlin-code-generator:77e431bb75")
 
@@ -30,7 +38,7 @@ dependencies {
 
     testApi("org.springframework.boot:spring-boot-starter-validation")
     testApi("org.springframework.boot:spring-boot-starter-data-jpa")
-    testApi("com.github.b1412:kotlin-code-generator-meta:8c10be3699")
+    testApi("com.github.b1412:kotlin-code-generator-meta:11abea967b")
     testApi("org.junit.jupiter:junit-jupiter-engine")
 }
 
