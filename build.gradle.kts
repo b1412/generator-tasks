@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-    api("com.github.b1412:api-common:2cbab0a995")
+    api("com.github.b1412:api-common:e307fc7309")
     api("com.github.b1412:kotlin-code-generator:77e431bb75")
 
     api("com.google.guava:guava:29.0-jre")
