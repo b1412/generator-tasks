@@ -21,6 +21,10 @@ repositories {
     maven(url = "https://jitpack.io")
     maven {
         url = uri("https://maven.pkg.github.com/b1412/permission-api")
+        credentials {
+            username = System.getenv("GITHUB_ACTOR")
+            password = System.getenv("GITHUB_TOKEN")
+        }
     }
 }
 
