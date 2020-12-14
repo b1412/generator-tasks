@@ -84,18 +84,19 @@ fun getRules(resultset: ResultSet): List<TaskRule> {
 }
 
 fun getPermissions(entityName: String, baseId: Long): List<TaskPermission> {
-    val permissionList = mutableListOf<TaskPermission>()
-    permissionList.add(indexPermission(entityName))
-    permissionList.add(createPermission(entityName))
-    permissionList.add(readPermission(entityName))
-    permissionList.add(updatePermission(entityName))
-    permissionList.add(deletePermission(entityName))
-    permissionList.add(deleteAllPermission(entityName))
-    permissionList.add(excelPermission(entityName))
-    permissionList.mapIndexed { index, permission ->
+    return mutableListOf(
+        indexPermission(entityName),
+        createPermission(entityName),
+        readPermission(entityName),
+        updatePermission(entityName),
+        deletePermission(entityName),
+        deleteAllPermission(entityName),
+        excelPermission(entityName),
+        clonePermission(entityName)
+    ).mapIndexed { index, permission ->
         permission.id = (baseId * 100 + index.inc())
+        permission
     }
-    return permissionList
 }
 
 fun indexPermission(entityName: String): TaskPermission {
@@ -215,13 +216,13 @@ fun getRolePermissions(taskRoleList: List<TaskRole>, permissionList: List<TaskPe
     taskRoleList.map { role ->
         permissionList.map { permission ->
             val rolePermission = TaskRolePermission(
-                    permission = permission,
-                    version = 0,
-                    creatorId = 1,
-                    modifierId = 1,
-                    roleName = role.name,
-                    roleId = role.id,
-                    permissionId = permission.id
+                permission = permission,
+                version = 0,
+                creatorId = 1,
+                modifierId = 1,
+                roleName = role.name,
+                roleId = role.id,
+                permissionId = permission.id
             )
 
             rolePermissionList.add(rolePermission)
@@ -243,40 +244,44 @@ fun getRolePermissions(taskRoleList: List<TaskRole>, permissionList: List<TaskPe
  *  1 2 10 100
  *  creator 4
  */
-fun getRolePermissionRule(taskRolePermissionList: List<TaskRolePermission>, taskRuleList: List<TaskRule>, permissions: List<CodePermission>): List<TaskRolePermissionRule> {
+fun getRolePermissionRule(
+    taskRolePermissionList: List<TaskRolePermission>,
+    taskRuleList: List<TaskRule>,
+    permissions: List<CodePermission>
+): List<TaskRolePermissionRule> {
 
     val rolePermissionRuleList = mutableListOf<TaskRolePermissionRule>()
     val list = taskRolePermissionList
-            .filter { rolePermission ->
+        .filter { rolePermission ->
 
-                permissions.firstOption { it.role == rolePermission.roleName }
-                        .map {
-                            it.httpMethod.contains(rolePermission.permission.httpMethod)
-                        }.getOrElse { true }
+            permissions.firstOption { it.role == rolePermission.roleName }
+                .map {
+                    it.httpMethod.contains(rolePermission.permission.httpMethod)
+                }.getOrElse { true }
 
-            }
+        }
     list.map { rolePermission ->
         val toOption = permissions.firstOption { it.role == rolePermission.roleName }
-                .map {
-                    val first = taskRuleList.first { r -> r.name == it.rule }
-                    println("Customized Permission Setting [${rolePermission.permission.entity}]")
-                    first
-                }
-                .getOrElse {
-                    println("Default Permission Setting [${rolePermission.permission.entity}]")
+            .map {
+                val first = taskRuleList.first { r -> r.name == it.rule }
+                println("Customized Permission Setting [${rolePermission.permission.entity}]")
+                first
+            }
+            .getOrElse {
+                println("Default Permission Setting [${rolePermission.permission.entity}]")
 
-                    val ruleId = when (rolePermission.roleId) {
-                        1L -> taskRuleList.first { it.id == 1L } //super admin
-                        2L -> taskRuleList.first { it.id == 5L }   //app admin
-                        10L -> taskRuleList.first { it.id == 5L }   // customer
-                        //100L -> taskRuleList.first { it.id == 4L }  //anno
-                        else -> {
-                            null
-                        }
+                val ruleId = when (rolePermission.roleId) {
+                    1L -> taskRuleList.first { it.id == 1L } //super admin
+                    2L -> taskRuleList.first { it.id == 5L }   //app admin
+                    10L -> taskRuleList.first { it.id == 5L }   // customer
+                    //100L -> taskRuleList.first { it.id == 4L }  //anno
+                    else -> {
+                        null
                     }
-                    println("${rolePermission.permission.entity} ${rolePermission.roleId} ${ruleId}")
-                    ruleId
-                }.toOption()
+                }
+                println("${rolePermission.permission.entity} ${rolePermission.roleId} ${ruleId}")
+                ruleId
+            }.toOption()
         val rule = toOption.map {
             val rolePermissionRule = TaskRolePermissionRule()
             rolePermissionRule.rolePermissionId = rolePermission.id
