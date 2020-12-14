@@ -196,6 +196,19 @@ fun excelPermission(entityName: String): TaskPermission {
     return permission
 }
 
+fun clonePermission(entityName: String): TaskPermission {
+    val endPoint = CaseFormat.UPPER_CAMEL.converterTo(CaseFormat.LOWER_HYPHEN).convert(entityName)
+    val permission = TaskPermission()
+    permission.version = 0
+    permission.authKey = "Clone $entityName"
+    permission.authUris = "/v[\\d]+/$endPoint/clone"
+    permission.entity = entityName
+    permission.httpMethod = "POST"
+    permission.creatorId = 1
+    permission.modifierId = 1
+    return permission
+}
+
 fun getRolePermissions(taskRoleList: List<TaskRole>, permissionList: List<TaskPermission>): List<TaskRolePermission> {
     val rolePermissionList = mutableListOf<TaskRolePermission>()
 
