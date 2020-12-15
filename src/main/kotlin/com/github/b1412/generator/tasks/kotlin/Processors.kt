@@ -17,11 +17,11 @@ fun projectPermissionProcessor(map: MutableMap<String, String>): (Task, CodeProj
         val delAllRolePermissionSqlList = mutableListOf<String>()
         val delAllRolePermissionRuleSqlList = mutableListOf<String>()
 
+        val conn = getConnection(map)
         project.entities.forEach {
             if (task.ignoreEntities.any { name -> name == it.name }) {
                 return@forEach
             }
-            val conn = getConnection(map)
             val stmt: Statement? = null
             val resultSet: ResultSet? = null
             val roleList = getRoles(getResultSet(conn, "role", stmt, resultSet))
@@ -46,6 +46,7 @@ fun projectPermissionProcessor(map: MutableMap<String, String>): (Task, CodeProj
             delAllRolePermissionSqlList.addAll(delRolePermissionSqlList)
             delAllRolePermissionRuleSqlList.addAll(delRolePermissionRuleSqlList)
         }
+        conn.close()
         mutableMapOf(
             "allPermissionSqlList" to allPermissionSqlList,
             "allRolePermissionSqlList" to allRolePermissionSqlList,
@@ -72,7 +73,7 @@ fun entityPermissionProcessor(map: MutableMap<String, String>): (Task, CodeEntit
         val permissionSqlList = getPermissionSql(permissionList)
         val rolePermissionSqlList = getRolePermissionSql(rolePermissionList)
         val rolePermissionRuleSqlList = getRolePermissionRuleSql(rolePermissionRuleList)
-
+        conn.close()
         mutableMapOf(
             "permissionSqlList" to permissionSqlList,
             "rolePermissionSqlList" to rolePermissionSqlList,
