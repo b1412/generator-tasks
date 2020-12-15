@@ -12,21 +12,21 @@ import java.sql.DriverManager
 import java.sql.ResultSet
 import java.sql.Statement
 
-var conn: Connection? = null
 
-fun getConnection(map: MutableMap<String, String>) {
+fun getConnection(map: MutableMap<String, String>): Connection {
     val jdbcUser = map["jdbcUser"]
     val jdbcPassword = map["jdbcPassword"]
     val jdbcDriver = map["jdbcDriver"]
     val jdbcUrl = map["jdbcUrl"]
     Class.forName(jdbcDriver).newInstance()
-    conn = DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword)
+    return DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword)
+
 }
 
-fun getResultSet(beanName: String, statement: Statement?, resultset: ResultSet?): ResultSet {
+fun getResultSet(conn:Connection,beanName: String, statement: Statement?, resultset: ResultSet?): ResultSet {
     var stmt = statement
     var res = resultset
-    stmt = conn!!.createStatement()
+    stmt = conn.createStatement()
     val sql = "SELECT * FROM $beanName;"
     res = stmt!!.executeQuery(sql)
 
