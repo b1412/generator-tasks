@@ -79,7 +79,6 @@ fun entityPermissionProcessor(map: MutableMap<String, String>): (Task, CodeEntit
             "rolePermissionSqlList" to rolePermissionSqlList,
             "rolePermissionRuleSqlList" to rolePermissionRuleSqlList
         )
-
     }
 }
 

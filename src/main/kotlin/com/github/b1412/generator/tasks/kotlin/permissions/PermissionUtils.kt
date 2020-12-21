@@ -20,14 +20,13 @@ fun getConnection(map: MutableMap<String, String>): Connection {
     val jdbcUrl = map["jdbcUrl"]
     Class.forName(jdbcDriver).newInstance()
     return DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword)
-
 }
 
-fun getResultSet(conn:Connection,beanName: String, statement: Statement?, resultset: ResultSet?): ResultSet {
+fun getResultSet(conn: Connection, beanName: String, statement: Statement?, resultset: ResultSet?): ResultSet {
     var stmt = statement
     var res = resultset
     stmt = conn.createStatement()
-    val sql = "SELECT * FROM $beanName;"
+    val sql = "SELECT * FROM $beanName order by id ;"
     res = stmt!!.executeQuery(sql)
 
     if (stmt.execute(sql)) {
@@ -264,11 +263,11 @@ fun getRolePermissionRule(
         val toOption = permissions.firstOption { it.role == rolePermission.roleName }
             .map {
                 val first = taskRuleList.first { r -> r.name == it.rule }
-                println("Customized Permission Setting [${rolePermission.permission.entity}]")
+                println("Customized Permission  [${rolePermission.permission.entity}] ${first.name}")
                 first
             }
             .getOrElse {
-                println("Default Permission Setting [${rolePermission.permission.entity}]")
+                println("Default Permission  [${rolePermission.permission.entity}]")
 
                 val ruleId = when (rolePermission.roleId) {
                     1L -> taskRuleList.first { it.id == 1L } //super admin
