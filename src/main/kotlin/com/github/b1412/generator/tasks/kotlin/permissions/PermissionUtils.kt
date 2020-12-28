@@ -209,29 +209,35 @@ fun clonePermission(entityName: String): TaskPermission {
     return permission
 }
 
-fun getRolePermissions(taskRoleList: List<TaskRole>, permissionList: List<TaskPermission>): List<TaskRolePermission> {
-    val rolePermissionList = mutableListOf<TaskRolePermission>()
-
-    taskRoleList.map { role ->
-        permissionList.map { permission ->
-            val rolePermission = TaskRolePermission(
-                permission = permission,
-                version = 0,
-                creatorId = 1,
-                modifierId = 1,
-                roleName = role.name,
-                roleId = role.id,
-                permissionId = permission.id
-            )
-
-            rolePermissionList.add(rolePermission)
-        }
-    }
-
-    rolePermissionList.map {
+fun getRolePermissions(
+    taskRoleList: List<TaskRole>,
+    permissionList: List<TaskPermission>,
+    permissions: List<CodePermission>
+): List<TaskRolePermission> {
+    return taskRoleList.flatMap { role ->
+        permissionList
+            .filter { permission ->
+                permissions.firstOption { it.role == role.name }
+                    .map {
+                        it.httpMethod.contains(permission.httpMethod)
+                    }.getOrElse { true }
+            }
+            .map { permission ->
+                val rolePermission = TaskRolePermission(
+                    permission = permission,
+                    version = 0,
+                    creatorId = 1,
+                    modifierId = 1,
+                    roleName = role.name,
+                    roleId = role.id,
+                    permissionId = permission.id
+                )
+                rolePermission
+            }
+    }.map {
         it.id = (it.roleId.toString() + it.permissionId.toString()).toLong()
+        it
     }
-    return rolePermissionList
 }
 
 /**
@@ -248,16 +254,13 @@ fun getRolePermissionRule(
     taskRuleList: List<TaskRule>,
     permissions: List<CodePermission>
 ): List<TaskRolePermissionRule> {
-
     val rolePermissionRuleList = mutableListOf<TaskRolePermissionRule>()
     val list = taskRolePermissionList
         .filter { rolePermission ->
-
             permissions.firstOption { it.role == rolePermission.roleName }
                 .map {
                     it.httpMethod.contains(rolePermission.permission.httpMethod)
                 }.getOrElse { true }
-
         }
     list.map { rolePermission ->
         val toOption = permissions.firstOption { it.role == rolePermission.roleName }

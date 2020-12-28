@@ -27,7 +27,7 @@ fun projectPermissionProcessor(map: MutableMap<String, String>): (Task, CodeProj
             val roleList = getRoles(getResultSet(conn, "role", stmt, resultSet))
             val ruleList = getRules(getResultSet(conn, "rule", stmt, resultSet))
             val permissionList = getPermissions(it.name, it.code.toLong())
-            val rolePermissionList = getRolePermissions(roleList, permissionList)
+            val rolePermissionList = getRolePermissions(roleList, permissionList, it.permissions)
             val rolePermissionRuleList = getRolePermissionRule(rolePermissionList, ruleList, it.permissions)
 
             val permissionSqlList = getPermissionSql(permissionList)
@@ -68,7 +68,7 @@ fun entityPermissionProcessor(map: MutableMap<String, String>): (Task, CodeEntit
         val roleList = getRoles(getResultSet(conn, "role", stmt, resultSet))
         val ruleList = getRules(getResultSet(conn, "rule", stmt, resultSet))
         val permissionList = getPermissions(entity.name, entity.code.toLong())
-        val rolePermissionList = getRolePermissions(roleList, permissionList)
+        val rolePermissionList = getRolePermissions(roleList, permissionList, entity.permissions)
         val rolePermissionRuleList = getRolePermissionRule(rolePermissionList, ruleList, entity.permissions)
         val permissionSqlList = getPermissionSql(permissionList)
         val rolePermissionSqlList = getRolePermissionSql(rolePermissionList)

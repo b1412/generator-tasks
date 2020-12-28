@@ -9,10 +9,11 @@ import javax.persistence.Entity
 import javax.persistence.ManyToOne
 
 @PermissionFeatures(
-    PermissionFeature(role = "student", rule = "belongTo"),
+    PermissionFeature(role = "student", rule = "belongTo", httpMethods = ["GET"]),
     PermissionFeature(role = "teacher", rule = "branches"),
     PermissionFeature(role = "admin", rule = "all")
 )
+
 @EntityFeature
 @Entity
 data class Tag(
