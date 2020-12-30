@@ -32,8 +32,8 @@ fun ktGenerator(config: String, additionalTasks: List<Task> = listOf()) {
             ServiceTask(),
             AllPermissionTask(properties),
             DelAllPermissionTask(properties),
-            PermissionTask(properties),
-            RolePermissionRuleTask(properties),
+           // PermissionTask(properties),
+          //  RolePermissionRuleTask(properties),
             ExcelExportTask(),
             HttpTaskGenerator()
     ) + additionalTasks
