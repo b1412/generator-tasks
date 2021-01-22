@@ -5,7 +5,7 @@ import com.github.b1412.generator.task.MultipleTask
 
 class ExcelExportTask : MultipleTask(
     filePath = { project, entity ->
-        TaskConstants.generatedPath + TaskConstants.srcPath + project.packageName.replace(
+        TaskConstants.apiPath + TaskConstants.srcPath + project.packageName.replace(
             ".",
             "/"
         ) + "/" + "excel" + "/" + entity!!.name + "ExcelParsingRule.kt"
