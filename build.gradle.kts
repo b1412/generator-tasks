@@ -31,7 +31,7 @@ repositories {
 dependencies {
     implementation("com.github.b1412:permission-base:0.1.36")
     api("com.github.b1412:api-common:e307fc7309")
-    api("com.github.b1412:kotlin-code-generator:60817836fb")
+    api("com.github.b1412:kotlin-code-generator:f113dc7ee5")
 
     api("com.google.guava:guava:29.0-jre")
     val arrowVersion = "0.11.0"
