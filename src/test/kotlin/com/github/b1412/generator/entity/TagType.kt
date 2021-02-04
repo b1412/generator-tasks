@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull
 @EntityFeature
 @Entity
 data class TagType(
-    @ExcelFeature(importable = true,index = 1)
+    @ExcelFeature(importable = true, index = 1)
     @NotNull
     val name: String?
 ) : BaseEntity()
