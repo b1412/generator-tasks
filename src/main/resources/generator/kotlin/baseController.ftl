@@ -44,7 +44,7 @@ abstract class Base${entity.name}Controller : BaseController<${entity.name}, Lon
        return super.deleteOne(id,request)
     }
 
-    @DeleteMapping
+    @DeleteMapping("clear")
     override fun deleteAll(request: HttpServletRequest): ResponseEntity<*> {
        return super.deleteAll(request)
     }
