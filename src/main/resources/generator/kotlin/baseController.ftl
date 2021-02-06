@@ -43,4 +43,9 @@ abstract class Base${entity.name}Controller : BaseController<${entity.name}, Lon
     override fun deleteOne(@PathVariable id: Long, request: HttpServletRequest): ResponseEntity<*> {
        return super.deleteOne(id,request)
     }
+
+    @DeleteMapping
+    override fun deleteOne(request: HttpServletRequest): ResponseEntity<*> {
+       return super.deleteAll(request)
+    }
 }
