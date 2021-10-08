@@ -60,8 +60,8 @@ fun projectPermissionProcessor(map: MutableMap<String, String>): (Task, CodeProj
     }
 }
 
-fun entityPermissionProcessor(map: MutableMap<String, String>): (Task, CodeEntity) -> Map<String, Any?> {
-    return { _, entity ->
+fun entityPermissionProcessor(map: MutableMap<String, String>): (Task, CodeProject, CodeEntity) -> Map<String, Any?> {
+    return { _, _, entity ->
         val conn = getConnection(map)
         val stmt: Statement? = null
         val resultSet: ResultSet? = null
