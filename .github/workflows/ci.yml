@@ -32,7 +32,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build -xtest
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
       - name: Publish jars to GitHub package
